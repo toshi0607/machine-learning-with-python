@@ -26,8 +26,8 @@ def hypothesis(theta):
   return lambda x: sigmoid(np.matrix(theta).T * np.matrix(x))
 
 def sigmoid():
-  return lambda  z: 1 / 1 + exp(-z)
+  return lambda  z: 1 / (1 + exp(-z))
 
-def cost_function(X, y , theta):
+def cost(X, y , theta):
     h = hypothesis(theta)
     return 1 / m * (-y.T * np.log(h) - (1 - y).T * np.log(1 - h)
