@@ -22,8 +22,8 @@ plt.ylabel("malignant?")
 plt.plot(x0, y0)
 plt.plot(x[:, 1], y, "ko");
 
-def hypothesis(theta)
-  x: sigmoid(np.matrix(theta).T * np.matrix(x))
+def hypothesis(theta):
+  return lambda x: sigmoid(np.matrix(theta).T * np.matrix(x))
 
-def sigmoid
+def sigmoid:
   return lambda  z: 1 / 1 + exp(-z)
