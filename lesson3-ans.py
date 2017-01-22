@@ -30,4 +30,8 @@ def sigmoid():
 
 def cost(X, y , theta):
     h = hypothesis(theta)
-    return -1 / m * (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X)) 
+    return -1 / m * (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X))
+
+def dJ_dtj(X, y, theta):
+  h = hypothesis(theta)
+  return np.matrix(X).T * (h(X) - y)
