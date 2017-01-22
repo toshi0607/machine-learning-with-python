@@ -37,8 +37,7 @@ def dJ_dtj(X, y, theta):
   return np.matrix(X).T * (h(X) - y)
 
 def gradient_descent(X, y, theta):
-  tmp = np.matrix(np.zeros(theta.shape))
-  costｓ = np.zeros(num_iters)
+  costs = np.zeros(num_iters)
 
   for i in range (num_iters):
     theta = theta - alpha * dJ_dtj(X, y, theta)
