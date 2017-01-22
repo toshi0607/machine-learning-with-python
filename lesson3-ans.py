@@ -28,10 +28,19 @@ def hypothesis(theta):
 def sigmoid():
   return lambda  z: 1 / (1 + exp(-z))
 
-def cost(X, y , theta, m):
+def cost(X, y , theta):
   h = hypothesis(theta)
   return -1 * m / (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X)))
 
 def dJ_dtj(X, y, theta):
   h = hypothesis(theta)
   return np.matrix(X).T * (h(X) - y)
+
+def gradient_descent(X, y, theta):
+  tmp = np.matrix(np.zeros(theta.shape))
+  costｓ = np.zeros(num_iters)
+
+  for i in range (num_iters):
+    theta = theta - alpha * dJ_dtj(X, y, theta)
+    costs[i] = cost(X, y, theta)
+  return theta, costs
