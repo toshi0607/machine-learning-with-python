@@ -30,4 +30,4 @@ def sigmoid():
 
 def cost(X, y , theta):
     h = hypothesis(theta)
-    return 1 / m * (-y.T * np.log(h) - (1 - y).T * np.log(1 - h)
+    return -1 / m * (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X)) 
