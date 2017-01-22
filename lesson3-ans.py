@@ -22,24 +22,33 @@ plt.ylabel("malignant?")
 plt.plot(x0, y0)
 plt.plot(x[:, 1], y, "ko");
 
-def hypothesis(theta):
-  return lambda x: sigmoid(np.matrix(theta).T * np.matrix(x))
+#np.matrix(theta).Tが公式…？
+def hypothesis(theta, x):
+  return sigmoid(np.matrix(theta) * np.matrix(x))
 
-def sigmoid():
-  return lambda  z: 1 / (1 + exp(-z))
+def sigmoid(z):
+  return 1 / (1 + np.exp(-z))
 
-def cost(X, y , theta):
-  h = hypothesis(theta)
-  return -1 * m / (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X)))
+def cost(x, y , theta):
+  h = hypothesis(theta, x)
+  return -m / (y.T * np.log(h) + (1 - y).T * np.log(1 - h))
 
-def dJ_dtj(X, y, theta):
-  h = hypothesis(theta)
-  return np.matrix(X).T * (h(X) - y)
+# np.matrix(x).T*(h - y)が公式…？
+def dJ_dtj(x, y, theta):
+  h = hypothesis(theta, x)
+  return np.matrix(x) * (h - y).T
 
-def gradient_descent(X, y, theta):
+def gradient_descent(x, y, theta):
   costs = np.zeros(num_iters)
-
   for i in range (num_iters):
-    theta = theta - alpha * dJ_dtj(X, y, theta)
-    costs[i] = cost(X, y, theta)
+    theta = theta - alpha * dJ_dtj(x, y, theta) #実行するとthetaが初期化時2*1だったのが2*2になって落ちる
+    costs[i] = cost(x, y, theta)
   return theta, costs
+
+num_iters = 1000
+alpha = 0.001
+
+theta = np.zeros((2,1))
+theta, cost = gradient_descent(x[:, 1], y, theta)
+
+theta
