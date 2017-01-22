@@ -28,9 +28,9 @@ def hypothesis(theta):
 def sigmoid():
   return lambda  z: 1 / (1 + exp(-z))
 
-def cost(X, y , theta):
-    h = hypothesis(theta)
-    return -1 / m * (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X))
+def cost(X, y , theta, m):
+  h = hypothesis(theta)
+  return -1 * m / (y.T * np.log(h(X)) + (1 - y).T * np.log(1 - h(X)))
 
 def dJ_dtj(X, y, theta):
   h = hypothesis(theta)
