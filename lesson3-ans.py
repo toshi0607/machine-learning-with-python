@@ -22,26 +22,26 @@ plt.ylabel("malignant?")
 plt.plot(x0, y0)
 plt.plot(x[:, 1], y, "ko");
 
-#np.matrix(theta).Tが公式…？
+# theta.shape -> (2,1)
+# x.shape → (30,2)
 def hypothesis(theta, x):
-  return sigmoid(np.matrix(theta) * np.matrix(x))
+  return sigmoid(np.inner(theta.T, x))
 
 def sigmoid(z):
   return 1 / (1 + np.exp(-z))
 
 def cost(x, y , theta):
   h = hypothesis(theta, x)
-  return -m / (y.T * np.log(h) + (1 - y).T * np.log(1 - h))
+  return np.sum(-1/m * (y.T * np.log(h) + ((1 - y).T) * np.log(1 - h)))
 
-# np.matrix(x).T*(h - y)が公式…？
 def dJ_dtj(x, y, theta):
   h = hypothesis(theta, x)
-  return np.matrix(x) * (h - y).T
+  return np.inner(x.T, (h - y))
 
 def gradient_descent(x, y, theta):
   costs = np.zeros(num_iters)
   for i in range (num_iters):
-    theta = theta - alpha * dJ_dtj(x, y, theta) #実行するとthetaが初期化時2*1だったのが2*2になって落ちる
+    theta = theta - (alpha * dJ_dtj(x, y, theta)).T
     costs[i] = cost(x, y, theta)
   return theta, costs
 
@@ -49,6 +49,6 @@ num_iters = 1000
 alpha = 0.001
 
 theta = np.zeros((2,1))
-theta, cost = gradient_descent(x[:, 1], y, theta)
+theta, cost = gradient_descent(x, y, theta)
 
 theta
