@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import expit
+%matplotlib inline
 
 m = 30
 n = 1
@@ -22,33 +23,54 @@ plt.ylabel("malignant?")
 plt.plot(x0, y0)
 plt.plot(x[:, 1], y, "ko");
 
-# theta.shape -> (2,1)
-# x.shape → (30,2)
 def hypothesis(theta, x):
-  return sigmoid(np.inner(theta.T, x))
+  return sigmoid(np.inner(theta, x))
 
 def sigmoid(z):
   return 1 / (1 + np.exp(-z))
 
 def cost(x, y , theta):
   h = hypothesis(theta, x)
-  return np.sum(-1/m * (y.T * np.log(h) + ((1 - y).T) * np.log(1 - h)))
+  return np.sum(-1/m * (y * np.log(h) + (1 - y) * np.log(1 - h)))
 
 def dJ_dtj(x, y, theta):
   h = hypothesis(theta, x)
   return np.inner(x.T, (h - y))
 
+from scipy.optimize import minimize
+
+print(x)
+print(y)
+cost2 = lambda t: cost(x, y, t)
+print(cost2(np.ones(2)))
+
+res = minimize(cost2, np.array([-7, 1]))
+print(res)
+
 def gradient_descent(x, y, theta):
   costs = np.zeros(num_iters)
   for i in range (num_iters):
-    theta = theta - (alpha * dJ_dtj(x, y, theta)).T
+    theta = theta - (alpha * dJ_dtj(x, y, theta))
     costs[i] = cost(x, y, theta)
   return theta, costs
 
-num_iters = 1000
+num_iters = 10000
 alpha = 0.001
 
-theta = np.zeros((2,1))
+theta = np.array([0, 0])
 theta, cost = gradient_descent(x, y, theta)
 
 theta
+
+
+x1 = np.arange(0, 30, 0.1)
+y1 = expit(-9.35488066 + 1.84326689* x1)
+
+plt.xlim(-10, 20)
+plt.ylim(-0.1, 1.1)
+plt.plot(x[:, 1], y, "ko");
+plt.plot(x1, y1)
+
+plt.plot(cost)
+plt.xlabel("num_iters")
+plt.ylabel("J(theta)")
