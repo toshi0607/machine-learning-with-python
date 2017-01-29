@@ -44,7 +44,7 @@ print(y)
 cost2 = lambda t: cost(x, y, t)
 print(cost2(np.ones(2)))
 
-res = minimize(cost2, np.array([-7, 1]))
+res = minimize(cost2, np.array([-8, 1.6]))
 print(res)
 
 def gradient_descent(x, y, theta):
