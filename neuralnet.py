@@ -39,7 +39,6 @@ X = np.c_[np.ones((m, 1)), X]
 # X.shape
 # -> (5000, 401)
 
-
 # Xの列数を後で調整するためにとっておく
 m, _n = X.shape
 
@@ -69,6 +68,7 @@ a2 = softmax(np.dot(aa, theta2.T))
 # 答え合わせ
 correct = 0
 for i in range(0, m):
+    # 10 labels, from 1 to 10 とのことでindexとラベルがずれてるので1足して調整する
     prediction = np.argmax(a2[i]) + 1
     correct += prediction == y[i]
 
