@@ -15,5 +15,15 @@ def loadmat(file_path, *names):
     # -> <class 'dict'>
     return [mat[name] for name in names]
 
+def sigmoid(z):
+    return scipy.special.expit(z)
+
 X, y = loadmat(digits_data_path, 'X', 'y')
 theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
+m, _n = X.shape
+
+# xの数（m * nのm分1をmerge）
+X = c_[ones((m, 1)), X]
+
+# 中間層の処理
+A = c_[ones((m, 1)), sigmoid(theta1.dot(X.T)).T]
