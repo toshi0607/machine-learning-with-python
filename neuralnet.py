@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import scipy.io
+import scipy.special
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,11 +29,18 @@ def softmax(x):
 
 X, y = loadmat(digits_data_path, 'X', 'y')
 # X.shape
-# -> (5000, 401)
+# -> (5000, 400)
 # y.shape
 # -> (5000, 1)
 
-# xの列数を後で調整するためにとっておく
+# Xにbias項が含まれてない
+# theta1はbias項分も考慮して25*401になっているので1を各行にマージする
+X = np.c_[np.ones((m, 1)), X]
+# X.shape
+# -> (5000, 401)
+
+
+# Xの列数を後で調整するためにとっておく
 m, _n = X.shape
 
 theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
@@ -47,7 +57,7 @@ a = sigmoid(np.dot(X, theta1.T))
 
 # unitの数が25でbiasも考慮すると入力は26になる
 # theta2はbias項分も考慮してるので、aの各行に1をマージ
-aa = c_[ones((m, 1)), a]
+aa = np.c_[np.ones((m, 1)), a]
 # -> (5000, 26)
 
 # 出力層
