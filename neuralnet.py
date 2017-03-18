@@ -3,8 +3,8 @@ import scipy.io
 import scipy.misc
 import scipy.optimize
 import scipy.special
-from numpy import *
-from matplotlib import pyplot
+import numpy as np
+import matplotlib.pyplot as plt
 
 digits_data_path = './data/ex3data1.mat'
 weights_data_path = './data/ex3weights.mat'
@@ -18,15 +18,41 @@ def loadmat(file_path, *names):
 def sigmoid(z):
     return scipy.special.expit(z)
 
+def softmax(x):
+    if x.ndim == 2:
+        x = x.T
+        x = x - np.max(x, axis=0)
+        y = np.exp(x) / np.sum(np.exp(x), axis=0)
+        return y.T
+    # オーバーフロー対策
+    x = x - np.max(x)
+    return np.exp(x) / np.sum(np.exp(x))
+
 X, y = loadmat(digits_data_path, 'X', 'y')
-theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
+# X.shape
+# -> (5000, 401)
+# y.shape
+# -> (5000, 1)
+
+# xの列数を後で調整するためにとっておく
 m, _n = X.shape
 
-# xの数（m * nのm分1をmerge）
-X = c_[ones((m, 1)), X]
+theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
+# theta1.shape
+# -> (25, 401)
+# theta2.shape
+# -> (10, 26)
 
-# 中間層の処理
-A = c_[ones((m, 1)), sigmoid(theta1.dot(X.T)).T]
+# 中間層
+a = sigmoid(np.dot(X, theta1.T))
+# a.shape
+# -> (5000, 25)
 
-# 出力層の処理
-out = theta2.dot(A.T).T
+# theta2はbias項分も考慮してるので、aの各行に1をマージ
+aa = c_[ones((m, 1)), a]
+# -> (5000, 26)
+
+# 出力層
+a2 = np.dot(aa, theta2.T)
+# a2.shape
+# -> (5000, 10)
