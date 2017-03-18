@@ -41,6 +41,7 @@ theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
 
 # 中間層
 a = sigmoid(np.dot(X, theta1.T))
+# 内積の場合転置不要 a = sigmoid(np.inner(X, theta1))
 # a.shape
 # -> (5000, 25)
 
@@ -50,6 +51,7 @@ aa = c_[ones((m, 1)), a]
 
 # 出力層
 a2 = softmax(np.dot(aa, theta2.T))
+# 内積の場合転置不要 a2 = softmax(np.inner(aa, theta2))
 # a2.shape
 # -> (5000, 10)
 
