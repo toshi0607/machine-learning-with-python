@@ -49,7 +49,7 @@ aa = c_[ones((m, 1)), a]
 # -> (5000, 26)
 
 # 出力層
-a2 = np.dot(aa, theta2.T)
+a2 = softmax(np.dot(aa, theta2.T))
 # a2.shape
 # -> (5000, 10)
 
