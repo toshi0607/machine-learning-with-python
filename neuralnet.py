@@ -27,3 +27,6 @@ X = c_[ones((m, 1)), X]
 
 # 中間層の処理
 A = c_[ones((m, 1)), sigmoid(theta1.dot(X.T)).T]
+
+# 出力層の処理
+out = theta2.dot(A.T).T
