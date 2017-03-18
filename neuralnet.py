@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-import scipy.io
-import scipy.misc
-import scipy.optimize
-import scipy.special
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -56,3 +52,12 @@ aa = c_[ones((m, 1)), a]
 a2 = np.dot(aa, theta2.T)
 # a2.shape
 # -> (5000, 10)
+
+# 答え合わせ
+correct = 0
+for i in range(0, m):
+    prediction = np.argmax(a2[i]) + 1
+    correct += prediction == y[i]
+
+print('Accuracy: %.2f%%' % (correct * 100.0 / m))
+# -> Accuracy: 97.52%
