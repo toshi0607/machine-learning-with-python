@@ -45,6 +45,7 @@ a = sigmoid(np.dot(X, theta1.T))
 # a.shape
 # -> (5000, 25)
 
+# unitの数が25でbiasも考慮すると入力は26になる
 # theta2はbias項分も考慮してるので、aの各行に1をマージ
 aa = c_[ones((m, 1)), a]
 # -> (5000, 26)
