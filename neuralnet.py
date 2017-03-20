@@ -18,7 +18,7 @@ def sigmoid(z):
     return scipy.special.expit(z)
 
 def softmax(x):
-    max = np.max(a)
+    max = np.max(x)
     return np.exp(x - max) / np.sum(np.exp(x - max))
 
 def _softmax(x):
