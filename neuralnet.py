@@ -39,7 +39,7 @@ X = np.c_[np.ones((m, 1)), X]
 # X.shape
 # -> (5000, 401)
 
-# Xの列数を後で調整するためにとっておく
+# Xの行数を後で調整するためにとっておく
 m, _n = X.shape
 
 theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
