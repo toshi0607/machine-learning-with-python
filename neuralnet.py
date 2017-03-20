@@ -33,14 +33,14 @@ X, y = loadmat(digits_data_path, 'X', 'y')
 # y.shape
 # -> (5000, 1)
 
-# Xにbias項が含まれてない
-# theta1はbias項分も考慮して25*401になっているので1を各行にマージする
-X = np.c_[np.ones((m, 1)), X]
-# X.shape
-# -> (5000, 401)
-
 # Xの行数を後で調整するためにとっておく
 m, _n = X.shape
+
+# Xにbias項が含まれてない
+# theta1はbias項分も考慮して25*401になっているので1を各行にマージする
+X = np.concatenate((np.ones((m, 1)), X), axis=1)
+# X.shape
+# -> (5000, 401)
 
 theta1, theta2 = loadmat(weights_data_path, 'Theta1', 'Theta2')
 # theta1.shape
@@ -56,7 +56,7 @@ a = sigmoid(np.dot(X, theta1.T))
 
 # unitの数が25でbiasも考慮すると入力は26になる
 # theta2はbias項分も考慮してるので、aの各行に1をマージ
-aa = np.c_[np.ones((m, 1)), a]
+aa = np.concatenate((np.ones((m, 1)), a), axis=1)
 # -> (5000, 26)
 
 # 出力層
