@@ -18,14 +18,13 @@ def sigmoid(z):
     return scipy.special.expit(z)
 
 def softmax(x):
-    if x.ndim == 2:
-        x = x.T
-        x = x - np.max(x, axis=0)
-        y = np.exp(x) / np.sum(np.exp(x), axis=0)
-        return y.T
-    # オーバーフロー対策
-    x = x - np.max(x)
+    max = np.max(a)
+    return np.exp(x - max) / np.sum(np.exp(x - max))
+
+def _softmax(x):
     return np.exp(x) / np.sum(np.exp(x))
+
+
 
 X, y = loadmat(digits_data_path, 'X', 'y')
 # X.shape
