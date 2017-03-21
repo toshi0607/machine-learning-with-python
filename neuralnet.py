@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import scipy.io
 import scipy.special
-
 import numpy as np
-import matplotlib.pyplot as plt
 
 digits_data_path = './data/ex3data1.mat'
 weights_data_path = './data/ex3weights.mat'
